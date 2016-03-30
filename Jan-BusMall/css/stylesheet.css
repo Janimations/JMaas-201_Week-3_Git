@@ -1,3 +1,12 @@
+
+
+#instructions {
+    margin: 0 auto;
+}
+
 #myButton, #voteMore {
   visibility: hidden;
+}
+img {
+    margin: 20px;
 }
