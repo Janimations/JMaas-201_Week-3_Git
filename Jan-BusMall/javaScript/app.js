@@ -67,15 +67,8 @@ function showResults() {
   displayButton.setAttribute('style','visibility:hidden');
 
   //*** Charts get made here :
-
-  var clicksChart = document.getElementById("clicksChart").getContext("2d");
-  clicksChartGlobal = new Chart(clicksChart).Bar(barData);      //asssigning new chart to global variable so we can call destroy method on it
-  clicksChart = clicksChartGlobal;
-
-  var percentChart = document.getElementById("percentChart").getContext("2d");
-  percentChartGlobal = new Chart(percentChart).Bar(barDataPercent);
-  percentChart = percentChartGlobal;
-
+  clicksChart  = new Chart(clicksChartCtx).Bar(barData);      //asssigning new chart to global variable so we can call destroy method on it
+  percentChart = new Chart(percentChartCtx).Bar(barDataPercent);
 }; // showResults close
 
 
@@ -114,6 +107,8 @@ var barDataPercent = {
 */
 
 //*** DOM - variables:
+var clicksChartCtx = document.getElementById("clicksChart").getContext("2d");
+var percentChartCtx = document.getElementById("percentChart").getContext("2d");
 
 var imageOne = document.getElementById('imageSlotOne');
 var imageTwo = document.getElementById('imageSlotTwo');
@@ -143,8 +138,8 @@ var x = true;
 var clicks = 16;
 
 //variables to set clicksChart and percentChart to be global in scope
-var clicksChartGlobal;
-var percentChartGlobal;
+var clicksChart;
+var percentChart;
 
 /*=======================================
    constructor for new image objects:
@@ -307,22 +302,20 @@ function eightMore() {
  */
 
 function newVoteRound() {
-  console.log("before " + clicksChart);
-  // clear canvas and destroys charts
-  clicksChartGlobal.clear();
-  percentChartGlobal.clear();
 
-  clicksChartGlobal.destroy();
-  percentChartGlobal.destroy();
-console.log("after " + clicksChart);
+  console.log("before " + clicksChart);
+
+  //  destroys charts
+
+  clicksChart.destroy();
+  percentChart.destroy();
+  console.log("after " + clicksChart);
 
   //resets all global variables
   totalClicks = 0;
   processClick = true;
   clicks = 16;
   x = true;
-  clicksChartGlobal = 0;
-  percentChartGlobal = 0;
   percentArray = [];
   yAxisArray = 0;
 
