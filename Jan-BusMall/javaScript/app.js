@@ -1,13 +1,116 @@
 /************************************************
 // JMaas Bus-Mall
-// 201 Week 3 Tuesday
+// 201 Week 3 Tuesday - Friday
 ************************************************/
+
+/*
+=============
+canvas charts
+=============
+*/
+
+//*** Arrays for charts-data:
+
+var labelArray = [];
+var yAxisArray = [];
+var percentArray = [];
+
+//*** Functionc to generate data-arrays:
+
+var makeBarLabels = function() {
+  for (var i = 0; i < catArray.length; i++) {
+    labelArray[i] = catArray[i].name;
+  }
+};
+
+var makeYAxis = function() {
+  for (var i = 0; i < catArray.length; i++) {
+    yAxisArray[i] = catArray[i].nClicks;
+  }
+};
+
+// FIXME : SOMETIMES PRODUCES NaN !!!! WTF ?!
+
+var makePercentChart = function() {
+  for (var i = 0; i < catArray.length; i++) {
+      // Handle case where nShow is zero (just assign 0% as the value)
+    var nShow = catArray[i].nShow;
+    var p = 0;
+    if (nShow) { p = Math.floor((catArray[i].nClicks / nShow)*100); }
+    percentArray.push(p);
+  }
+};
 
 
 /*
-=========
-variables
-=========
+=======================================================
+             showResults Function:
+(linked to displayButton and it's EventListener below )
+=======================================================
+*/
+
+function showResults() {
+
+  makePercentChart();
+//percentArray = [1, 2, 3, -1, -10, 99];
+  barDataPercent.datasets[0].data = percentArray;
+  console.log("percent array: " + percentArray);
+  console.log("barDataPercent: " + barDataPercent.datasets[0].data);
+
+  makeBarLabels();
+  barData.labels = labelArray;
+  barDataPercent.labels = labelArray;
+
+  makeYAxis();
+  barData.datasets[0].data = yAxisArray;
+
+  displayButton.setAttribute('style','visibility:hidden');
+
+  //*** Charts get made here :
+
+  var clicksChart = document.getElementById("clicksChart").getContext("2d");
+  clicksChartGlobal = new Chart(clicksChart).Bar(barData);      //asssigning new chart to global variable so we can call destroy method on it
+  clicksChart = clicksChartGlobal;
+
+  var percentChart = document.getElementById("percentChart").getContext("2d");
+  percentChartGlobal = new Chart(percentChart).Bar(barDataPercent);
+  percentChart = percentChartGlobal;
+
+}; // showResults close
+
+
+/*
+==============================
+Chart-Data Objects:
+==============================
+*/
+
+var barData = {
+	labels : [],               // array of image-objects names gets appended here
+	datasets : [
+		{
+			fillColor : "rgba(73,188,170,0.4)",
+			strokeColor : "rgba(72,174,209,0.4)",
+			data : []            // array of image-objects nClicks gets appended here
+		}
+	]
+};
+
+var barDataPercent = {
+  labels : [],
+  datasets : [
+    {
+      fillColor : "rgba(73,188,170,0.4)",
+      strokeColor : "rgba(72,174,209,0.4)",
+      data : []                 // array of percentage of clicks when shown for each image
+    }
+  ]
+};
+
+/*
+=================
+   variables
+=================
 */
 
 //*** DOM - variables:
@@ -18,6 +121,7 @@ var imageThree = document.getElementById('imageSlotThree');
 
 var displayButton = document.getElementById('myButton');
 var voteMoreButton = document.getElementById('voteMore');
+var resetButton = document.getElementById('resetButton');
 
 var chart = document.getElementById('chart');
 
@@ -34,6 +138,13 @@ var catArray = [];      // ALL IMAGE-OBJECTS LIVE HERE !!!
 
 var totalClicks = 0;
 var processClick = true;
+
+var x = true;
+var clicks = 16;
+
+//variables to set clicksChart and percentChart to be global in scope
+var clicksChartGlobal;
+var percentChartGlobal;
 
 /*=======================================
    constructor for new image objects:
@@ -123,28 +234,43 @@ imageThree.onclick = function() {
   }
 }
 
-//*** Functionj triggered by the Event-Listener:
+
+//*** Functionj triggered by the div-Event-Listener:
 
 function imageClicked() {
   if (processClick) {
     totalClicks++;
 
-    //for each addition image add in code to call the image here:
+    // updates each image-slot with a random image for each click
     showRandomImg(imageOne);
     showRandomImg(imageTwo);
     showRandomImg(imageThree);
 
-    if (totalClicks >= 16) {
+    if (totalClicks >= clicks && x && totalClicks < 24) {           // NOTE remember x !
 
-      //code to display hidden button
-      displayButton.setAttribute('style','visibility:visible');
-      voteMoreButton.setAttribute('style','visibility:visible');
-      processClick = false;
+          // show hidden buttons
+          displayButton.setAttribute('style','visibility:visible');
+          voteMoreButton.setAttribute('style','visibility:visible');
+          processClick = false;
+
+    } else if (totalClicks === 24) {
+          x = false;                                                // x makes sure that the first if-condition does not run after 24 clicks
+          voteMoreButton.setAttribute('style', 'visibility:hidden');
+          console.log(totalClicks);
+          processClick = false;
+
+          voteMoreButton.removeEventListener('click', eightMore);
+          resetButton.setAttribute('style','visibility:visible');
+
+          // automatically displays charts at the end of voting
+          showResults();
 
       // TODO Add code here to update image-slots with a final-image:
     }
-  }
-}
+
+  }  // 1st if close
+}  // imageClicked close
+
 
 //*** Random number generator:
 
@@ -152,6 +278,7 @@ function randomImageIndex() {
   var result = Math.floor(Math.random() * (catArray.length));
   return result;
 }
+
 
 //*** Function to display a new random image from catArray, for one Image-slot:
 
@@ -162,15 +289,67 @@ function showRandomImg(image) {             // image argument is one of three va
 }
 
 
-//*** Function to display results from imagge-Objects in html:
+//*** Function to extend voting to 24 votes  possible:
 
-function showResults() {
+function eightMore() {
+  clicks = 24;
+  processClick = true;
+  voteMoreButton.setAttribute('style','visibility:hidden');
+  displayButton.setAttribute('style','visibility:hidden');
+  displayButton.removeEventListener('click', showResults);
+}
 
-  chart.textContent = "the total number of clicks is " + totalClicks;
 
-  paraOne.textContent = "the number of times <<< bolete_01 >>> was clicked on: " + catArray[0].nClicks;
-  paraTwo.textContent = "the number of times <<< chantarelle_03 >>> was clicked on: " + catArray[4].nClicks;
-  paraThree.textContent = "the number of times <<< morell_01 >>> was clicked on: " + catArray[13].nClicks;
+/*
+==============================================
+ Function to reset for a new round of voting:
+ =============================================
+ */
+
+function newVoteRound() {
+  console.log("before " + clicksChart);
+  // clear canvas and destroys charts
+  clicksChartGlobal.clear();
+  percentChartGlobal.clear();
+
+  clicksChartGlobal.destroy();
+  percentChartGlobal.destroy();
+console.log("after " + clicksChart);
+
+  //resets all global variables
+  totalClicks = 0;
+  processClick = true;
+  clicks = 16;
+  x = true;
+  clicksChartGlobal = 0;
+  percentChartGlobal = 0;
+  percentArray = [];
+  yAxisArray = 0;
+
+  //resets all image object's counters
+  for (var i = 0; i < catArray.length; i++) {
+    catArray[i].nClicks = 0;
+    catArray[i].nShow = 0;
+  }
+
+  // hides reset button after click
+  resetButton.setAttribute('style','visibility:hidden');
+
+  // re-populate image-slots anew
+  showRandomImg(imageOne);
+  showRandomImg(imageTwo);
+  showRandomImg(imageThree);
+
+  // reset chart-Data objects:
+
+  barData.datasets[0].data = [];
+  barDataPercent.datasets[0].data = [];
+
+
+
+  // add back in eventListeners
+  displayButton.addEventListener('click', showResults);
+  voteMoreButton.addEventListener('click', eightMore);
 }
 
 
@@ -185,3 +364,11 @@ imageTwo.addEventListener("click", imageClicked);
 imageThree.addEventListener("click", imageClicked);
 
 displayButton.addEventListener("click", showResults);
+
+voteMoreButton.addEventListener("click", eightMore);
+
+resetButton.addEventListener("click", newVoteRound);
+
+
+
+//
