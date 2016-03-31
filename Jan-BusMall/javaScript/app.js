@@ -165,7 +165,7 @@ function showRandomImg(image) {             // image argument is one of three va
 //*** Function to display results from imagge-Objects in html:
 
 function showResults() {
-  
+
   chart.textContent = "the total number of clicks is " + totalClicks;
 
   paraOne.textContent = "the number of times <<< bolete_01 >>> was clicked on: " + catArray[0].nClicks;
@@ -180,9 +180,6 @@ event listeners
 ===============
 */
 
-/*++++++
-addin eventListener per imageNUMBER variables set at the top of the js file
-*/
 imageOne.addEventListener("click", imageClicked);
 imageTwo.addEventListener("click", imageClicked);
 imageThree.addEventListener("click", imageClicked);
