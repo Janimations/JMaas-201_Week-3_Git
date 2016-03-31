@@ -257,6 +257,9 @@ function imageClicked() {
           voteMoreButton.removeEventListener('click', eightMore);
           resetButton.setAttribute('style','visibility:visible');
 
+          // destroy charts before showing them again:
+          clicksChart.destroy();
+          percentChart.destroy();
           // automatically displays charts at the end of voting
           showResults();
 
@@ -317,7 +320,7 @@ function newVoteRound() {
   clicks = 16;
   x = true;
   percentArray = [];
-  yAxisArray = 0;
+  yAxisArray = [];
 
   //resets all image object's counters
   for (var i = 0; i < catArray.length; i++) {
