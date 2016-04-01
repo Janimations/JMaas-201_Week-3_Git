@@ -138,3 +138,9 @@ catArray[15] = new makeImageObj("oyster_01", "images/oyster_01.jpg");
 catArray[16] = new makeImageObj("oyster_02", "images/oyster_02.jpg");
 catArray[17] = new makeImageObj("porcini_01", "images/porcini_01.jpg");
 catArray[18] = new makeImageObj("shitake_01", "images/shitake_01.jpg");
+
+
+
+
+
+//

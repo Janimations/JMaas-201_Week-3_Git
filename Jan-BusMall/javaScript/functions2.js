@@ -39,9 +39,10 @@ function makeStorageObject() {
 =======================================================
 */
 
-var checkStorage = function (){
+var checkStorage = function() {
 
-    if (localStorage.getItem('storageObjectOne') {      //checks if storageObjectOne is in local storage
+    if (localStorage.getItem('storageObjectOne')) {
+
             var parsedStorage = storageOut("storageObjectOne");
 
             totalClicks = parsedStorage.totalClicks; // refills global variable totalClicks array
@@ -67,6 +68,7 @@ var checkStorage = function (){
 
     } else {
         var storageObjectOne = new makeStorageObject(); // storageObjectOne is a global variable!!!!!!!
+        console.log('new storageObject created');
         storageIn();
 
     }//Main if Close
@@ -139,12 +141,14 @@ var storeClicks = function() {
     setOfThree.push(imageOne.getAttribute('src'));
     setOfThree.push(imageTwo.getAttribute('src'));
     setOfThree.push(imageThree.getAttribute('src'));
+    // and push them into a 2D-array in storageObjectOne
     storageObjectOne.ImagesShown.push(setOfThree);
 
     //check if voteMore button has been clicked
-
     if (voteMore) {
-      storageObjectOne.voteMore = true;
+        storageObjectOne.voteMore = true;
+    } else {
+        storageObjectOne.voteMore = false;
     };
 
 // check if processClick is true/false

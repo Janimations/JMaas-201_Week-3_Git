@@ -94,6 +94,7 @@ function showRandomImg(image) {             // image argument is one of three va
 function eightMore() {
   clicks = 24;
   processClick = true;
+  voteMore = true;
   voteMoreButton.setAttribute('style','visibility:hidden');
   displayButton.setAttribute('style','visibility:hidden');
   displayButton.removeEventListener('click', showResults);
