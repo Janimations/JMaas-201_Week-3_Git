@@ -43,7 +43,7 @@ var checkStorage = function() {
 
     if (localStorage.getItem('storageObjectOne')) {
 
-            var parsedStorage = storageOut("storageObjectOne");
+            var parsedStorage = storageOut();
 
             totalClicks = parsedStorage.totalClicks; // refills global variable totalClicks array
             percentArray = parsedStorage.percentAll; // refills global variable percent array
@@ -90,8 +90,8 @@ var storageIn = function () {
 
 // function that gets storage object out of local storage
 
-var storageOut = function (objectName) {
-  var pullStorage = localStorage.getItem(objectName);
+var storageOut = function () {
+  var pullStorage = localStorage.getItem('storageObjectOne');
   var parseData = JSON.parse(pullStorage);
   return parseData;
 }
