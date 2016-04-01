@@ -35,7 +35,8 @@ function makeStorageObject() {
 /*
 =======================================================
                 START-UP function
-    ( checks if localStorage has storageObjectOne )
+    ( checks if localStorage has storageObjectOne
+and restores app to state stored in storageObjectOne )
 =======================================================
 */
 
@@ -52,7 +53,7 @@ var checkStorage = function() {
             processClick = parsedStorage.processClick; // resets global variable processClick - is needed for imageClicked function!!!
 
             // restore image slots
-            imageOne.setAttribute('src', parsedStorage.ImagesShown[totalClicks][0]);  // FIXME ? maaybe not use totalClicks...
+            imageOne.setAttribute('src', parsedStorage.ImagesShown[totalClicks][0]);  // FIXME ? Error: "cannot read property '0' of undefined"
             imageOne.setAttribute('src', parsedStorage.ImagesShown[totalClicks][1]);
             imageOne.setAttribute('src', parsedStorage.ImagesShown[totalClicks][2]);
 
