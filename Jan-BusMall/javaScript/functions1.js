@@ -157,6 +157,18 @@ function imageClicked() {
   if (processClick) {
     totalClicks++;
 
+    /*-------------------------------------------
+          new local storage-feature:
+    --------------------------------------------*/
+
+    storeClicks();
+    storageIn();
+    
+    /*------------------------------------------*/
+
+
+
+
     // updates each image-slot with a random image for each click
     showRandomImg(imageOne);
     showRandomImg(imageTwo);

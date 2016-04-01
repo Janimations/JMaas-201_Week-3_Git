@@ -23,7 +23,7 @@ had to be changed obviously to make it work...
 function makeStorageObject() {
   this.totalClicks = 0;
   this.nClicksAll = [];
-  this.nShow = [];
+  this.nShowAll = [];
   this.percentAll = [];
   this.ImagesShown = []; // 2d array
   this.voteMore = false;
@@ -42,9 +42,10 @@ function makeStorageObject() {
 var checkStorage = function() {
 
     if (localStorage.getItem('storageObjectOne')) {
+                console.log('storageObjectOne present: checking localStorage: ' + localStorage);
 
-            console.log('storageObjectOne present: checking localStorage: ' + localStorage);
             var parsedStorage = storageOut();
+                console.log('Object pulled out of localStorage: ' + parsedStorage);
 
             totalClicks = parsedStorage.totalClicks; // refills global variable totalClicks array
             percentArray = parsedStorage.percentAll; // refills global variable percent array
@@ -68,10 +69,10 @@ var checkStorage = function() {
             }
 
     } else {
-        var storageObjectOne = new makeStorageObject(); // storageObjectOne is a global variable!!!!!!!
-        console.log('new storageObject created');
+        storageObjectOne = new makeStorageObject();         // storageObjectOne is a global variable!!!!!!!
+            console.log('new storageObject created');
         storageIn();
-        console.log('localStorage: --- ' + localStorage);
+            console.log('localStorage: --- ' + localStorage);
 
     }//Main if Close
 
@@ -125,14 +126,14 @@ var storeClicks = function() {
       for (var i = 0; i < catArray.length; i++) {
         nShowAllArray.push(catArray[i].nShow);
       }
-      storageObjectOne.nClicksAll = nClicksAllArray;
+      storageObjectOne.nShowAll = nShowAllArray;
 
   // get percentages from all Image Objects
     for (var i = 0; i < catArray.length; i++) {
       var percentAllArray = [];
-      var nShow = characterArray[i].nShow;
+      var nShow = catArray[i].nShow;
       var p = 0;
-      if (nShow) {p = Math.floor((characterArray[i].nClicks/characterArray[i].nShow)*100);}
+      if (nShow) {p = Math.floor((catArray[i].nClicks/catArray[i].nShow)*100);}
       percentAllArray.push(p);
     }
 
