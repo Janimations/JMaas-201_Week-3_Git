@@ -52,7 +52,7 @@ var makePercentChart = function() {
 function showResults() {
 
   makePercentChart();
-//percentArray = [1, 2, 3, -1, -10, 99];
+
   barDataPercent.datasets[0].data = percentArray;
   console.log("percent array: " + percentArray);
   console.log("barDataPercent: " + barDataPercent.datasets[0].data);
