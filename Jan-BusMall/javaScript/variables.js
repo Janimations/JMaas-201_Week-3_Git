@@ -94,6 +94,14 @@ var clicksChart;
 var percentChart;
 
 
+
+//*** variables from Mob-Code:
+
+var voteMore = false;
+var Charts = false;
+var storageObjectOne;
+
+
 /*=======================================
    constructor for new image objects:
 =======================================*/
