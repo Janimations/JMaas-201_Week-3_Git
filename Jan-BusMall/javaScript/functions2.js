@@ -43,7 +43,7 @@ and restores app to state stored in storageObjectOne )
 var checkStorage = function() {
 
     if (localStorage.getItem('storageObjectOne')) {
-                console.log('storageObjectOne present: checking localStorage: ' + localStorage);
+                console.log('storageObjectOne present in localStorage: ' + localStorage.getItem('storageObjectOne'));
 
             var parsedStorage = storageOut();
                 console.log('Object pulled out of localStorage: ' + parsedStorage);
