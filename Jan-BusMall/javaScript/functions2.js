@@ -43,6 +43,8 @@ and restores app to state stored in storageObjectOne )
 var checkStorage = function() {
 
     if (localStorage.getItem('storageObjectOne')) {
+            storageObjectOne = new makeStorageObject();
+
                 console.log('storageObjectOne present in localStorage: ' + localStorage.getItem('storageObjectOne'));
 
             var parsedStorage = storageOut();
@@ -53,13 +55,13 @@ var checkStorage = function() {
             processClick = parsedStorage.processClick; // resets global variable processClick - is needed for imageClicked function!!!
                 console.log('totalClicks: ' + totalClicks);
             // restore image slots
-            imageOne.setAttribute('src', parsedStorage.ImagesShown[totalClicks][0]);  // FIXME ? Error: "cannot read property '0' of undefined"
-            imageOne.setAttribute('src', parsedStorage.ImagesShown[totalClicks][1]);
-            imageOne.setAttribute('src', parsedStorage.ImagesShown[totalClicks][2]);
+            imageOne.setAttribute('src', parsedStorage.ImagesShown[totalClicks -1][0]);  // FIXME ? Error: "cannot read property '0' of undefined"
+            imageTwo.setAttribute('src', parsedStorage.ImagesShown[totalClicks -1][1]);
+            imageThree.setAttribute('src', parsedStorage.ImagesShown[totalClicks -1][2]);
 
             for (var i = 0; i < catArray.length; i++) {
                 catArray[i].nClicks = parsedStorage.nClicksAll[i];
-                catArray[i].nShow = parsedStorage.nShow[i];
+                catArray[i].nShow = parsedStorage.nShowAll[i];
             }
 
             if (totalClicks > 16) {
@@ -97,7 +99,9 @@ var storageIn = function () {
 var storageOut = function () {
   var pullStorage = localStorage.getItem('storageObjectOne');
   var parseData = JSON.parse(pullStorage);
+    console.log('inside storageOut - parseDate:' + parseData);
   return parseData;
+
 }
 
 
@@ -110,11 +114,11 @@ var storageOut = function () {
 */
 
 var storeClicks = function() {
-
+        console.log('115 totalClicks' + totalClicks);
       window.localStorage.clear();   // insures that there are no old storageObjects in localStorage
-
+        console.log('117 totalClicks' + totalClicks);
       storageObjectOne.totalClicks = totalClicks;
-
+        console.log('119 totalClicks' + totalClicks);
       // get nClicks from all Image Objects
       var nClicksAllArray = [];
       for (var i = 0; i < catArray.length; i++) {

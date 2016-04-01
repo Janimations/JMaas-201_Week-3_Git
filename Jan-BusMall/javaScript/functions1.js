@@ -163,7 +163,7 @@ function imageClicked() {
 
     storeClicks();
     storageIn();
-    
+
     /*------------------------------------------*/
 
 
@@ -253,4 +253,10 @@ function newVoteRound() {
 
       displayButton.addEventListener('click', showResults);
       voteMoreButton.addEventListener('click', eightMore);
+
+      // clear localStorage
+      window.localStorage.clear();
+      // reset everything
+      checkStorage();
+      
 };  // newVoteRound close
