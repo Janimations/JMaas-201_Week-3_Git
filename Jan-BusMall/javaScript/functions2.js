@@ -51,7 +51,7 @@ var checkStorage = function() {
             totalClicks = parsedStorage.totalClicks; // refills global variable totalClicks array
             percentArray = parsedStorage.percentAll; // refills global variable percent array
             processClick = parsedStorage.processClick; // resets global variable processClick - is needed for imageClicked function!!!
-
+                console.log('totalClicks: ' + totalClicks);
             // restore image slots
             imageOne.setAttribute('src', parsedStorage.ImagesShown[totalClicks][0]);  // FIXME ? Error: "cannot read property '0' of undefined"
             imageOne.setAttribute('src', parsedStorage.ImagesShown[totalClicks][1]);
