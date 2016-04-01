@@ -43,17 +43,15 @@ and restores app to state stored in storageObjectOne )
 var checkStorage = function() {
 
     if (localStorage.getItem('storageObjectOne')) {
-            storageObjectOne = new makeStorageObject();
 
-                console.log('storageObjectOne present in localStorage: ' + localStorage.getItem('storageObjectOne'));
+            storageObjectOne = new makeStorageObject();  // storageObjectOne HAS to exist in order to re-populate!!!
 
             var parsedStorage = storageOut();
-                console.log('Object pulled out of localStorage: ' + parsedStorage);
 
             totalClicks = parsedStorage.totalClicks; // refills global variable totalClicks array
             percentArray = parsedStorage.percentAll; // refills global variable percent array
             processClick = parsedStorage.processClick; // resets global variable processClick - is needed for imageClicked function!!!
-                console.log('totalClicks: ' + totalClicks);
+
             // restore image slots
             imageOne.setAttribute('src', parsedStorage.ImagesShown[totalClicks -1][0]);  // FIXME ? Error: "cannot read property '0' of undefined"
             imageTwo.setAttribute('src', parsedStorage.ImagesShown[totalClicks -1][1]);
@@ -72,10 +70,15 @@ var checkStorage = function() {
             }
 
     } else {
+        // make a "fresh" storageObject
         storageObjectOne = new makeStorageObject();         // storageObjectOne is a global variable!!!!!!!
-            console.log('new storageObject created');
-        storageIn();
-            console.log('localStorage: --- ' + localStorage);
+
+        // populate image-slots for the first time
+        showRandomImg(imageOne);
+        showRandomImg(imageTwo);
+        showRandomImg(imageThree);
+        
+        // storageIn();
 
     }//Main if Close
 
@@ -99,7 +102,6 @@ var storageIn = function () {
 var storageOut = function () {
   var pullStorage = localStorage.getItem('storageObjectOne');
   var parseData = JSON.parse(pullStorage);
-    console.log('inside storageOut - parseDate:' + parseData);
   return parseData;
 
 }
@@ -114,11 +116,11 @@ var storageOut = function () {
 */
 
 var storeClicks = function() {
-        console.log('115 totalClicks' + totalClicks);
+
       window.localStorage.clear();   // insures that there are no old storageObjects in localStorage
-        console.log('117 totalClicks' + totalClicks);
+
       storageObjectOne.totalClicks = totalClicks;
-        console.log('119 totalClicks' + totalClicks);
+
       // get nClicks from all Image Objects
       var nClicksAllArray = [];
       for (var i = 0; i < catArray.length; i++) {
@@ -177,9 +179,9 @@ var storeClicks = function() {
 
 
 /*
-=====================
- All event listeners
-=====================
+======================
+ All Event-Listeners
+======================
 */
 
 imageOne.addEventListener("click", imageClicked);

@@ -157,22 +157,21 @@ function imageClicked() {
   if (processClick) {
     totalClicks++;
 
-    /*-------------------------------------------
-          new local storage-feature:
-    --------------------------------------------*/
-
-    storeClicks();
-    storageIn();
-
-    /*------------------------------------------*/
-
-
-
-
     // updates each image-slot with a random image for each click
     showRandomImg(imageOne);
     showRandomImg(imageTwo);
     showRandomImg(imageThree);
+
+
+    /*-------------------------------------------
+          new local storage-feature:
+    --------------------------------------------*/
+
+    storeClicks();   // having the images update "before" ensures that the  set of "new" images is re-populated when reloading...
+    storageIn();
+
+    /*------------------------------------------*/
+
 
     if (totalClicks >= clicks && x && totalClicks < 24) {           // NOTE remember x !
 
@@ -258,5 +257,5 @@ function newVoteRound() {
       window.localStorage.clear();
       // reset everything
       checkStorage();
-      
+
 };  // newVoteRound close
