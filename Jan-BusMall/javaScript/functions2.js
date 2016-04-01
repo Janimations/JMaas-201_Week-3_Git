@@ -43,6 +43,7 @@ var checkStorage = function() {
 
     if (localStorage.getItem('storageObjectOne')) {
 
+            console.log('storageObjectOne present: checking localStorage: ' + localStorage);
             var parsedStorage = storageOut();
 
             totalClicks = parsedStorage.totalClicks; // refills global variable totalClicks array
@@ -70,6 +71,7 @@ var checkStorage = function() {
         var storageObjectOne = new makeStorageObject(); // storageObjectOne is a global variable!!!!!!!
         console.log('new storageObject created');
         storageIn();
+        console.log('localStorage: --- ' + localStorage);
 
     }//Main if Close
 
