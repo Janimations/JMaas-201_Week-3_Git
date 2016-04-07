@@ -7,3 +7,4 @@
  ***********************************************/
 
 checkStorage(); // functions2.js // this checks at the beginning of everything or reload if there is an object in local Storage
+ 
